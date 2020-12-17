@@ -45,13 +45,14 @@ SUBROUTINE visit
 
   IF(first_call) THEN
 
-    nblocks=number_of_chunks
-    filename = "tea.visit"
-    u=get_unit(dummy)
-    OPEN(UNIT=u,FILE=filename,STATUS='UNKNOWN',IOSTAT=err)
-    WRITE(u,'(a,i5)')'!NBLOCKS ',nblocks
-    CLOSE(u)
-
+    IF ( parallel%boss ) THEN
+      nblocks=number_of_chunks
+      filename = "tea.visit"
+      u=get_unit(dummy)
+      OPEN(UNIT=u,FILE=filename,STATUS='UNKNOWN',IOSTAT=err)
+      WRITE(u,'(a,i5)')'!NBLOCKS ',nblocks
+      CLOSE(u)
+    ENDIF
     first_call=.FALSE.
 
   ENDIF
