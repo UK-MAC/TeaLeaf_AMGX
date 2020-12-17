@@ -59,6 +59,8 @@
 #        make IEEE=1              # Will select debug options as long as a compiler is selected as well
 # e.g. make COMPILER=INTEL MPI_COMPILER=mpiifort C_MPI_COMPILER=mpiicc DEBUG=1 IEEE=1 # will compile with the intel compiler with intel debug and ieee flags included
 
+AMGX_DIR=${AMGX_PATH}
+
 ifndef COMPILER
   MESSAGE=select a compiler to compile in OpenMP, e.g. make COMPILER=INTEL
 endif
@@ -127,8 +129,8 @@ MPI_COMPILER=mpif90
 C_MPI_COMPILER=mpicc
 CXX_MPI_COMPILER=mpiCC
 
-CXXFLAGS+=$(CFLAGS) -I $(CUDA_HOME)/include -I/home/mboulton/apps/libraries/amgx/2/include
-LDFLAGS+=-L /home/mboulton/apps/libraries/amgx/2/lib -L$(CUDA_HOME)/lib64
+CXXFLAGS+=$(CFLAGS) -I$(CUDA_HOME)/include -I$(AMGX_DIR)/include
+LDFLAGS+=-L$(AMGX_DIR)/lib -L$(CUDA_HOME)/lib64
 
 C_FILES=\
 	timer_c.o
